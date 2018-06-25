@@ -20,4 +20,23 @@
         android:text="URL will be shown here!"
         android:visibility="visible"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/tv_search_results"/>
+
+        </ScrollView>
+
+    </FrameLayout>
+
 </LinearLayout>
