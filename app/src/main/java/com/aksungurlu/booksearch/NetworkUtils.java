@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    final static String MAIN_URL = "http://openlibrary.org/search.json";
+    final static String MAIN_URL = "https://openlibrary.org/search.json";
     final static String QUERY_TITLE = "title";
     final static String QUERY_AUTHOR = "author";
 

@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private void makeQuery(String searchString){
         searchURL = NetworkUtils.buildUrl(searchString);
         mURLTextView.setText(searchURL.toString());
+        new bookQuerry().execute(searchURL);
     }
 
     public class bookQuerry extends AsyncTask<URL, Void, String> {
@@ -65,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
             String searchResult = null;
             try{
                 searchResult = NetworkUtils.getResponseFromHttpUrl(searchURL);
-            }catch(IOException e){
+             }catch(IOException e){
                 e.printStackTrace();
-            }
+             }
             return searchResult;
         }
 
@@ -75,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String searchResult) {
             if(searchResult != null && !searchResult.equals("")){
                 mResultsTextView.setText(searchResult);
+            }
+            else{
+                //mResultsTextView.setText("Hata");
             }
         }
     }
