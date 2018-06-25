@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BookSearch</string>
+    <string name="error">Error fetching data. Please try again later!</string>
 </resources>

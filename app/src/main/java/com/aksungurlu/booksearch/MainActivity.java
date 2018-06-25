@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mSearchEditText;
     private TextView mURLTextView;
     private TextView mResultsTextView;
+    private ProgressBar mProgressBar;
+    private TextView mErrorTextView;
     private URL searchURL;
 
     @Override
@@ -31,6 +35,28 @@ public class MainActivity extends AppCompatActivity {
         mURLTextView =(TextView) findViewById(R.id.tv_search_url);
         //search results TextView
         mResultsTextView = (TextView) findViewById(R.id.tv_search_results);
+        //progress bar
+        mProgressBar = (ProgressBar) findViewById(R.id.pb_loading);
+        //error TextView
+        mErrorTextView = (TextView) findViewById(R.id.tv_error_message);
+    }
+
+    private void showResultView(){
+        mResultsTextView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mErrorTextView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showProgressBar(){
+        mResultsTextView.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mErrorTextView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showErrorView(){
+        mResultsTextView.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mErrorTextView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -61,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
     public class bookQuerry extends AsyncTask<URL, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            showProgressBar();
+        }
+
+        @Override
         protected String doInBackground(URL... urls) {
             URL searchURL = urls[0];
             String searchResult = null;
@@ -76,9 +108,10 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String searchResult) {
             if(searchResult != null && !searchResult.equals("")){
                 mResultsTextView.setText(searchResult);
+                showResultView();
             }
             else{
-                //mResultsTextView.setText("Hata");
+                showErrorView();
             }
         }
     }

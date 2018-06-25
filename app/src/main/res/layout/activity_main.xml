@@ -37,6 +37,22 @@
 
         </ScrollView>
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:id="@+id/pb_loading"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:text="@string/error"
+            android:id="@+id/tv_error_message"
+            android:visibility="invisible"
+            android:padding="16dp"/>
+
     </FrameLayout>
 
 </LinearLayout>
