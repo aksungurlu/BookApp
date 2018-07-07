@@ -1,6 +1,7 @@
 package com.aksungurlu.booksearch;
 
 import android.content.Context;
+import android.graphics.Path;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -111,7 +112,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String searchResult) {
             if(searchResult != null && !searchResult.equals("")){
-                mResultsTextView.setText(searchResult);
+                String[] parsedBookList = OpenBookJSONUtilities.getBookDetails(searchResult);
+                for(String singleBook : parsedBookList){
+                    mResultsTextView.append(singleBook + "\n\n\n");
+                }
+                //mResultsTextView.setText(searchResult);
                 showResultView();
                 int bookCount = OpenBookJSONUtilities.getBookCount(searchResult);
                 showBookCount(Integer.toString(bookCount));
