@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
         new bookQuerry().execute(searchURL);
     }
 
+    public void showBookCount(String bookCountMessage){
+        Toast.makeText(this, bookCountMessage + " books are found!", Toast.LENGTH_LONG).show();
+    }
+
     public class bookQuerry extends AsyncTask<URL, Void, String> {
 
         @Override
@@ -109,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
             if(searchResult != null && !searchResult.equals("")){
                 mResultsTextView.setText(searchResult);
                 showResultView();
+                int bookCount = OpenBookJSONUtilities.getBookCount(searchResult);
+                showBookCount(Integer.toString(bookCount));
             }
             else{
                 showErrorView();
