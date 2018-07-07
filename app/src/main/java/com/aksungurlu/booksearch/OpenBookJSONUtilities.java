@@ -28,7 +28,8 @@ public final class OpenBookJSONUtilities {
 
     public static String[] getBookDetails(String jsonString) {
         final String keyBookList = "docs";
-        final String keyBookTitle =  "title_suggest";
+        final String keyBookTitle =  "title";
+        final String keyAuthor = "author_name";
 
         JSONArray bookJSONArray = null;
 
@@ -52,6 +53,13 @@ public final class OpenBookJSONUtilities {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            String stringAuthor = null;
+            try {
+                stringAuthor = bookJSONArray.getJSONObject(i).getJSONArray(keyAuthor).toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            parsedBookData[i] += " - " + stringAuthor;
         }
         return parsedBookData;
     }
