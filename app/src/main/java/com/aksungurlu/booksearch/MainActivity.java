@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             //Toast the edit text
             //Toast.makeText(MainActivity.this, mSearchEditText.getText(), Toast.LENGTH_LONG).show();
             //get parsed URL
-
+            mResultsTextView.setText("");
             makeQuery(mSearchEditText.getText().toString());
             return true;
         }
