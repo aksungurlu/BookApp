@@ -67,7 +67,7 @@ public final class OpenBookJSONUtilities {
             if(arrayJSONAuthor != null){
                 for(int k = 0; k < arrayJSONAuthor.length(); k++){
                     try {
-                        authorList.add(arrayJSONAuthor.getString(0));
+                        authorList.add(arrayJSONAuthor.getString(k));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
