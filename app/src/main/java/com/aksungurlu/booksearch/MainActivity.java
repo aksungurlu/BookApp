@@ -5,6 +5,8 @@ import android.graphics.Path;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
+    private RecyclerView mRecyclerView;
+    private BookViewAdapter mBookAdapter;
     private EditText mSearchEditText;
     private TextView mURLTextView;
     private TextView mResultsTextView;
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //RecyclerView
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_books);
         //EditText
         mSearchEditText = (EditText) findViewById(R.id.et_search);
         //URL TextView
@@ -40,24 +46,48 @@ public class MainActivity extends AppCompatActivity {
         mProgressBar = (ProgressBar) findViewById(R.id.pb_loading);
         //error TextView
         mErrorTextView = (TextView) findViewById(R.id.tv_error_message);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        mRecyclerView.setHasFixedSize(true);
+        mBookAdapter = new BookViewAdapter();
+        mRecyclerView.setAdapter(mBookAdapter);
+
+        //loadBookData();
+    }
+
+    private void loadBookData(){
+        mResultsTextView.setText("");
+        makeQuery(mSearchEditText.getText().toString());
     }
 
     private void showResultView(){
         mResultsTextView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
         mErrorTextView.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    private void showRecycleView(){
+        mResultsTextView.setVisibility(View.INVISIBLE);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        mErrorTextView.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showProgressBar(){
         mResultsTextView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.VISIBLE);
         mErrorTextView.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
     }
 
     private void showErrorView(){
         mResultsTextView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
         mErrorTextView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -72,8 +102,7 @@ public class MainActivity extends AppCompatActivity {
             //Toast the edit text
             //Toast.makeText(MainActivity.this, mSearchEditText.getText(), Toast.LENGTH_LONG).show();
             //get parsed URL
-            mResultsTextView.setText("");
-            makeQuery(mSearchEditText.getText().toString());
+            loadBookData();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -113,11 +142,14 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String searchResult) {
             if(searchResult != null && !searchResult.equals("")){
                 String[] parsedBookList = OpenBookJSONUtilities.getBookDetails(searchResult);
+
                 for(String singleBook : parsedBookList){
                     mResultsTextView.append(singleBook + "\n\n\n");
                 }
+
                 //mResultsTextView.setText(searchResult);
-                showResultView();
+                showRecycleView();
+                mBookAdapter.setBookList(parsedBookList);
                 int bookCount = OpenBookJSONUtilities.getBookCount(searchResult);
                 showBookCount(Integer.toString(bookCount));
             }
