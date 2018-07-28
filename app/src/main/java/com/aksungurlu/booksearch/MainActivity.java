@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private BookViewAdapter mBookAdapter;
     private EditText mSearchEditText;
     private TextView mURLTextView;
-    private TextView mResultsTextView;
+    //private TextView mResultsTextView;
     private ProgressBar mProgressBar;
     private TextView mErrorTextView;
     private URL searchURL;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         //URL TextView
         mURLTextView =(TextView) findViewById(R.id.tv_search_url);
         //search results TextView
-        mResultsTextView = (TextView) findViewById(R.id.tv_search_results);
+        //mResultsTextView = (TextView) findViewById(R.id.tv_search_results);
         //progress bar
         mProgressBar = (ProgressBar) findViewById(R.id.pb_loading);
         //error TextView
@@ -58,33 +58,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadBookData(){
-        mResultsTextView.setText("");
+        //mResultsTextView.setText("");
         makeQuery(mSearchEditText.getText().toString());
     }
 
     private void showResultView(){
-        mResultsTextView.setVisibility(View.VISIBLE);
+        //mResultsTextView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
         mErrorTextView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
     }
 
     private void showRecycleView(){
-        mResultsTextView.setVisibility(View.INVISIBLE);
+        //mResultsTextView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
         mErrorTextView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void showProgressBar(){
-        mResultsTextView.setVisibility(View.INVISIBLE);
+        //mResultsTextView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.VISIBLE);
         mErrorTextView.setVisibility(View.INVISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
     }
 
     private void showErrorView(){
-        mResultsTextView.setVisibility(View.INVISIBLE);
+        //mResultsTextView.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.INVISIBLE);
         mErrorTextView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.INVISIBLE);
@@ -143,9 +143,9 @@ public class MainActivity extends AppCompatActivity {
             if(searchResult != null && !searchResult.equals("")){
                 String[] parsedBookList = OpenBookJSONUtilities.getBookDetails(searchResult);
 
-                for(String singleBook : parsedBookList){
-                    mResultsTextView.append(singleBook + "\n\n\n");
-                }
+//                for(String singleBook : parsedBookList){
+//                    mResultsTextView.append(singleBook + "\n\n\n");
+//                }
 
                 //mResultsTextView.setText(searchResult);
                 showRecycleView();
